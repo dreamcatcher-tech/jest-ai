@@ -1,11 +1,11 @@
 #!/usr/bin/env NODE_NO_WARNINGS=1 node --loader=import-jsx
-import React from "react"
-import { render } from "ink"
-import meow from "meow"
-import App from "./src/App.js"
+import React from 'react'
+import { render } from 'ink'
+import meow from 'meow'
+import App from './src/app.js'
 
 const cli = meow(
-  `
+	`
 		Usage
 		  $ my-ink-cli
 
@@ -16,9 +16,9 @@ const cli = meow(
 		  $ my-ink-cli --name=Jane
 		  Hello, Jane
 	`,
-  {
-    importMeta: import.meta,
-  },
+	{
+		importMeta: import.meta,
+	},
 )
 
-render(<App name={cli.flags.name} />)
+render(<App />, { exitOnCtrlC: true })

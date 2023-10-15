@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "start": "NODE_NO_WARNINGS=1 node --loader=import-jsx cli.js",
-    "dev": "nodemon --no-colors --exec \"yarn start\"",
+    "dev": "nodemon --no-stdin --exec \"yarn start\"",
     "test": "xo && ava"
   },
   "bin": "index.js",
@@ -15,7 +15,8 @@
     "ink": "^4.4.1",
     "meow": "^12.1.1",
     "openai": "^4.12.1",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "react-devtools": "^4.28.4"
   },
   "devDependencies": {
     "@vdemedes/prettier-config": "^2.0.1",
@@ -48,6 +49,8 @@
     "semicolon": false
   },
   "prettier": {
-    "semi": false
+    "semi": false,
+    "singleQuote": true,
+    "useTabs": true
   }
 }
