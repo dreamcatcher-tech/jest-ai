@@ -1,5 +1,5 @@
 {
-	"name": "dreamcatcher-ai",
+	"name": "@dreamcatcher-tech/ai",
 	"type": "module",
 	"scripts": {
 		"postinstall": "patch-package",
