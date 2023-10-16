@@ -5,8 +5,7 @@
 		"postinstall": "patch-package",
 		"start": "NODE_NO_WARNINGS=1 node --loader=import-jsx cli.js",
 		"dev": "nodemon --no-stdin --exec \"yarn start\"",
-		"test": "xo && ava",
-		"ava": "ava",
+		"test": "ava",
 		"watch": "ava --watch",
 		"lint": "xo"
 	},

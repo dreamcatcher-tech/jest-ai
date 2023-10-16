@@ -20,7 +20,10 @@ jobs:
       - run: yarn install --frozen-lockfile
         
       - name: Test
+        env: 
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: yarn run test
+
 
       - name: Publish
         run: |
