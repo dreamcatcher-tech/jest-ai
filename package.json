@@ -1,5 +1,6 @@
 {
   "name": "@dreamcatcher-ai/cli",
+  "version": "0.0.2",
   "type": "module",
   "private": false,
   "publishConfig": {
@@ -77,6 +78,5 @@
     "semi": false,
     "singleQuote": true,
     "useTabs": false
-  },
-  "version": "0.0.2"
+  }
 }
