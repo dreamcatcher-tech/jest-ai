@@ -16,6 +16,7 @@ import Spinner from 'ink-spinner'
 import OpenAI from 'openai'
 import dotenv from 'dotenv'
 import ti from 'terminal-image'
+import History from './history.js'
 // import TextInput from 'ink-text-input'
 import { TextInput } from '@inkjs/ui'
 import { useAsync } from 'react-async-hook'
@@ -48,6 +49,7 @@ const Solver = ({ contents }) => {
 
 export default function App() {
 	const [prompt, setPrompt] = useState('')
+	const [history, setHistory] = useState([])
 	useInput((input, key) => {
 		// console.log('input', input, 'key', key)
 	})
@@ -81,8 +83,7 @@ export default function App() {
 					</Box>
 				)}
 			</Static>
-			<GPT contents="" />
-			<Solver />
+			<History history={history} />
 			<Box marginRight={1} borderStyle="round">
 				<Text>💡 </Text>
 				<TextInput

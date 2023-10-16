@@ -1,5 +1,5 @@
 {
-	"name": "jest-ai",
+	"name": "dreamcatcher-ai",
 	"type": "module",
 	"scripts": {
 		"postinstall": "patch-package",
@@ -16,6 +16,7 @@
 	},
 	"dependencies": {
 		"@inkjs/ui": "^1.0.0",
+		"assert-fast": "^1.0.3",
 		"cli-spinners": "^2.9.1",
 		"dotenv": "^16.3.1",
 		"ink": "^4.4.1",

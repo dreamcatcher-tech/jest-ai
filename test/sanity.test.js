@@ -20,3 +20,9 @@ test.only('here comes the...', async (t) => {
 	console.log('score', score)
 	t.pass()
 })
+
+// detect focus and tag focus in the chat
+// gpt powered listing of all gpt interfaces in the wild
+// you can use our prompts to generate more prompts, but they must be royalty payments in dreamcatcher
+
+// pitch the pubco as building the tooling for all this.
