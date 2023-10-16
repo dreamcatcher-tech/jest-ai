@@ -36,7 +36,7 @@
 		"ink-text-input": "^5.0.1",
 		"it-all": "^3.0.3",
 		"meow": "^12.1.1",
-		"openai": "^4.12.1",
+		"openai": "^4.12.3",
 		"react": "^18.2.0",
 		"react-async-hook": "^4.0.0",
 		"react-devtools": "^4.28.4",
