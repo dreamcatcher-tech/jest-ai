@@ -31,6 +31,7 @@ jobs:
           git config --global user.name "interbot"
           npm set //registry.npmjs.org/:_authToken=${{secrets.NPM_AUTH_TOKEN}}
           npm whoami
-          yarn publish --non-interactive --patch
+          yarn publish --non-interactive --patch --registry https://registry.npmjs.org/
             
 
+          
