@@ -1,56 +1,75 @@
 {
-  "name": "jest-ai",
-  "type": "module",
-  "scripts": {
-    "start": "NODE_NO_WARNINGS=1 node --loader=import-jsx cli.js",
-    "dev": "nodemon --no-stdin --exec \"yarn start\"",
-    "test": "xo && ava"
-  },
-  "bin": "index.js",
-  "engines": {
-    "node": ">=18"
-  },
-  "dependencies": {
-    "dotenv": "^16.3.1",
-    "ink": "^4.4.1",
-    "meow": "^12.1.1",
-    "openai": "^4.12.1",
-    "react": "^18.2.0",
-    "react-devtools": "^4.28.4"
-  },
-  "devDependencies": {
-    "@vdemedes/prettier-config": "^2.0.1",
-    "ava": "^5.3.1",
-    "chalk": "^5.3.0",
-    "eslint-config-xo-react": "^0.27.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "import-jsx": "^5.0.0",
-    "ink-testing-library": "^3.0.0",
-    "jest": "^29.7.0",
-    "nodemon": "^3.0.1",
-    "prettier": "^3.0.3",
-    "xo": "^0.56.0"
-  },
-  "ava": {
-    "environmentVariables": {
-      "NODE_NO_WARNINGS": "1"
-    },
-    "nodeArguments": [
-      "--loader=import-jsx"
-    ]
-  },
-  "xo": {
-    "extends": "xo-react",
-    "prettier": true,
-    "rules": {
-      "react/prop-types": "off"
-    },
-    "semicolon": false
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "useTabs": true
-  }
+	"name": "jest-ai",
+	"type": "module",
+	"scripts": {
+		"postinstall": "patch-package",
+		"start": "NODE_NO_WARNINGS=1 node --loader=import-jsx cli.js",
+		"dev": "nodemon --no-stdin --exec \"yarn start\"",
+		"test": "xo && ava",
+		"ava": "ava",
+		"watch": "ava --watch",
+		"lint": "xo"
+	},
+	"bin": "index.js",
+	"engines": {
+		"node": ">=18"
+	},
+	"dependencies": {
+		"@inkjs/ui": "^1.0.0",
+		"cli-spinners": "^2.9.1",
+		"dotenv": "^16.3.1",
+		"ink": "^4.4.1",
+		"ink-ascii": "^0.0.4",
+		"ink-big-text": "^2.0.0",
+		"ink-confirm-input": "^2.0.0",
+		"ink-form": "^1.0.2",
+		"ink-gradient": "^3.0.0",
+		"ink-image": "^2.0.0",
+		"ink-link": "^3.0.0",
+		"ink-markdown": "^1.0.4",
+		"ink-quicksearch-input": "^1.0.0",
+		"ink-spinner": "^5.0.0",
+		"ink-syntax-highlight": "^1.0.1",
+		"ink-table": "^3.0.0",
+		"ink-task-list": "^2.0.0",
+		"ink-text-input": "^5.0.1",
+		"it-all": "^3.0.3",
+		"meow": "^12.1.1",
+		"openai": "^4.12.1",
+		"react": "^18.2.0",
+		"react-async-hook": "^4.0.0",
+		"react-devtools": "^4.28.4",
+		"terminal-image": "^2.0.0"
+	},
+	"devDependencies": {
+		"@vdemedes/prettier-config": "^2.0.1",
+		"ava": "^5.3.1",
+		"chalk": "^5.3.0",
+		"eslint-config-xo-react": "^0.27.0",
+		"eslint-plugin-react": "^7.33.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"import-jsx": "^5.0.0",
+		"ink-testing-library": "^3.0.0",
+		"jest": "^29.7.0",
+		"nodemon": "^3.0.1",
+		"patch-package": "^8.0.0",
+		"prettier": "^3.0.3",
+		"xo": "^0.56.0"
+	},
+	"ava": {
+		"environmentVariables": {
+			"NODE_NO_WARNINGS": "1"
+		},
+		"nodeArguments": [
+			"--loader=import-jsx"
+		]
+	},
+	"xo": {
+		"prettier": true
+	},
+	"prettier": {
+		"semi": false,
+		"singleQuote": true,
+		"useTabs": true
+	}
 }

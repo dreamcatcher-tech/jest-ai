@@ -1,5 +1,7 @@
-describe("prompts", () => {});
+import test from 'ava'
 
+test.todo('send a message to another user')
+test.todo('send a solution to a user problem to them')
 /**
  * The output we want is a prompt that we can input against and get
  * the desired prompt response, but then have a file change so there
