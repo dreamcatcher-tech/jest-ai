@@ -1,6 +1,9 @@
 {
 	"name": "@dreamcatcher-tech/ai",
 	"type": "module",
+	"private": false,
+	"author": "Dreamcatcher Command",
+	"license": "AGPL-3.0",
 	"scripts": {
 		"postinstall": "patch-package",
 		"start": "NODE_NO_WARNINGS=1 node --loader=import-jsx cli.js",
