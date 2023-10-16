@@ -15,7 +15,7 @@
 		"watch": "ava --watch",
 		"lint": "xo"
 	},
-	"bin": "cli.js",
+	"bin": "./cli.js",
 	"engines": {
 		"node": ">=18"
 	},
@@ -27,15 +27,11 @@
 		"ink": "^4.4.1",
 		"ink-ascii": "^0.0.4",
 		"ink-big-text": "^2.0.0",
-		"ink-confirm-input": "^2.0.0",
-		"ink-form": "^1.0.2",
 		"ink-gradient": "^3.0.0",
 		"ink-image": "^2.0.0",
 		"ink-link": "^3.0.0",
 		"ink-markdown": "^1.0.4",
-		"ink-quicksearch-input": "^1.0.0",
 		"ink-spinner": "^5.0.0",
-		"ink-syntax-highlight": "^1.0.1",
 		"ink-table": "^3.0.0",
 		"ink-task-list": "^2.0.0",
 		"ink-text-input": "^5.0.1",
@@ -51,6 +47,7 @@
 		"@vdemedes/prettier-config": "^2.0.1",
 		"ava": "^5.3.1",
 		"chalk": "^5.3.0",
+		"eslint": "^8.51.0",
 		"eslint-config-xo-react": "^0.27.0",
 		"eslint-plugin-react": "^7.33.2",
 		"eslint-plugin-react-hooks": "^4.6.0",
