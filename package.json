@@ -1,5 +1,5 @@
 {
-	"name": "dreamcatcher.ai",
+	"name": "@dreamcatcher-ai/cli",
 	"type": "module",
 	"private": false,
 	"publishConfig": {
