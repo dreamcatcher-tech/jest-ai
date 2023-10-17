@@ -16,7 +16,7 @@
     "test": "ava",
     "watch": "ava --watch",
     "lint": "xo",
-    "np": "np --patch"
+    "np": "np patch"
   },
   "bin": {
     "cli2": "./bin.sh"
