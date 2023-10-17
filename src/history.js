@@ -18,7 +18,7 @@ import assert from 'assert-fast'
 const GPT = ({ contents }) => {
   return (
     <Box>
-      <Text color="green">🦾: </Text>
+      <Text color="green">🦾:&nbsp;</Text>
       <Text>{contents}</Text>
     </Box>
   )
@@ -26,7 +26,7 @@ const GPT = ({ contents }) => {
 const Solver = ({ contents }) => {
   return (
     <Box>
-      <Text color="magenta">💡: </Text>
+      <Text color="magenta">💡:&nbsp;</Text>
       <Text>{contents}</Text>
     </Box>
   )
