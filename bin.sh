@@ -1,6 +1,2 @@
 #!/bin/sh
-export NODE_NO_WARNINGS=1 
-ls -l
-pwd
-npm bin
-node --loader=import-jsx ./cli.js
+exec /usr/bin/env NODE_NO_WARNINGS=1 node --loader=import-jsx "$@"
