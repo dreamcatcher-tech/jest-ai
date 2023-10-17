@@ -1,16 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import {
-  render,
-  useInput,
-  useStdin,
-  useApp,
-  Box,
-  Text,
-  Static,
-  useStdout,
-  Newline,
-} from 'ink'
-import cliSpinners from 'cli-spinners'
+import React, { useState, useCallback } from 'react'
+import { useInput, Box, Text, Static } from 'ink'
 import OpenAI from 'openai'
 import dotenv from 'dotenv'
 import History from './history.js'

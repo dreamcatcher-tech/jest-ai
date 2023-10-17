@@ -11,4 +11,5 @@ spawn('node', args, {
     ...process.env,
     NODE_NO_WARNINGS: 1,
   },
+  cwd: __dirname,
 })
