@@ -1,13 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useInput, Box, Text, Static } from 'ink'
 import History from './history.js'
-import { TextInput } from '@inkjs/ui'
+import TextInput from 'ink-text-input'
 import Gradient from 'ink-gradient'
 import BigText from 'ink-big-text'
 import AI from './ai.js'
 
 export default function App({ priorHistory = [] }) {
-  const [prompt, setPrompt] = useState('')
+  const [prompt, setPrompt] = useState()
   const [history, setHistory] = useState(priorHistory)
 
   useInput((input, key) => {
@@ -39,12 +39,12 @@ export default function App({ priorHistory = [] }) {
         return next
       })
     }
-    setPrompt('')
   }, [prompt, ai])
   useEffect(() => {
     const ai = AI.create()
     setAI(ai)
   }, [])
+  const placeholder = prompt === undefined ? ' (messy genius goes here)' : ''
   return (
     <Box flexDirection="column">
       <Static items={[{}]}>
@@ -60,10 +60,10 @@ export default function App({ priorHistory = [] }) {
       <Box marginRight={1} borderStyle="round">
         <Text>💡 </Text>
         <TextInput
-          value={prompt}
+          value={prompt || ''}
           onChange={setPrompt}
           onSubmit={onSubmit}
-          placeholder=" (messy genius goes here)"
+          placeholder={placeholder}
         />
       </Box>
     </Box>
