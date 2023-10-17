@@ -1,4 +1,6 @@
-#!./bin.sh
+#!/bin/sh
+':' //# comment; exec /usr/bin/env node NODE_NO_WARNINGS=1 --loader=import-jsx "$0" "$@"
+
 // import React from 'react'
 // import { render } from 'ink'
 // import meow from 'meow'
