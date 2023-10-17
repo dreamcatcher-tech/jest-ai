@@ -18,7 +18,9 @@
     "lint": "xo",
     "np": "np --patch"
   },
-  "bin": "./bin.sh",
+  "bin": {
+    "cli": "./bin.sh"
+  },
   "engines": {
     "node": ">=18"
   },
