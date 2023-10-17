@@ -25,4 +25,8 @@ test.only('ask for openai key if not present', async (t) => {
   //   console.log('score', score)
   t.pass()
 })
+test.skip('change the api key', async (t) => {
+  // this will involve invoking the terminal prompter function, which is cancellable
+  // then when the new key is set, passing some comment about it
+})
 test.todo('use an existing openai key if present')
