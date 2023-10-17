@@ -36,16 +36,16 @@ export default function History({ history = [] }) {
   assert(Array.isArray(history))
   return (
     <Box flexDirection="column">
-      {history.map(({ role, content }) => {
+      {history.map(({ role, content }, index) => {
         switch (role) {
           case 'assistant':
-            return <GPT contents={content} />
+            return <GPT contents={content} key={index} />
           case 'system':
-            return <Text>🤖: {content}</Text>
+            return <Text key={index}>🤖: {content}</Text>
           case 'user':
-            return <Solver contents={content} />
+            return <Solver contents={content} key={index} />
           default:
-            return <Text>🤷‍♂️: {content}</Text>
+            return <Text key={index}>🤷‍♂️: {content}</Text>
         }
       })}
     </Box>

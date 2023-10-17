@@ -14,15 +14,29 @@ export default function App({ priorHistory = [] }) {
     // console.log('input', input, 'key', key)
   })
   const [ai, setAI] = useState()
-  const [stream, setStream] = useState('')
   const onSubmit = useCallback(async () => {
     // generate an id, then store a text item showing history of chat
+    setPrompt('')
+    let index = 0
+    setHistory((history) => {
+      const next = [
+        ...history,
+        { role: 'user', content: prompt },
+        { role: 'assistant', content: 'thinking...' },
+      ]
+      index = next.length - 1
+      return next
+    })
+
     const stream = []
     for await (const result of ai.stream(prompt)) {
       stream.push(result)
-      setStream(stream.join(''))
+      setHistory((history) => {
+        const next = [...history]
+        next[index].content = stream.join('')
+        return next
+      })
     }
-    setHistory([...history, { role: 'assistant', content: stream }])
   }, [prompt, ai])
   useEffect(() => {
     const ai = AI.create()

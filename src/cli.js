@@ -7,7 +7,7 @@ const history = [
   { role: 'user', content: 'hi' },
 ]
 
-render(<App priorHistory={history} />, {
+render(<App priorHistory={[]} />, {
   exitOnCtrlC: true,
   patchConsole: true,
 })
