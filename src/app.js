@@ -1,18 +1,15 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useInput, Box, Text, Static } from 'ink'
-import OpenAI from 'openai'
-import dotenv from 'dotenv'
 import History from './history.js'
 import { TextInput } from '@inkjs/ui'
 import Gradient from 'ink-gradient'
 import BigText from 'ink-big-text'
-dotenv.config()
-
-const openai = new OpenAI()
+import AI from './ai.js'
 
 export default function App({ priorHistory = [] }) {
   const [prompt, setPrompt] = useState('')
   const [history, setHistory] = useState(priorHistory)
+
   useInput((input, key) => {
     // console.log('input', input, 'key', key)
   })
@@ -35,10 +32,11 @@ export default function App({ priorHistory = [] }) {
     },
     [prompt],
   )
+  useEffect(() => {}, [])
   return (
     <Box flexDirection="column">
       <Static items={[{}]}>
-        {(image, index) => (
+        {(_, index) => (
           <Box key={index}>
             <Gradient name="rainbow">
               <BigText font="chrome" text="dreamcatcher.ai" />
