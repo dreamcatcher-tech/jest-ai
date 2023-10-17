@@ -35,12 +35,14 @@ const Solver = ({ contents }) => {
 export default function History({ history = [] }) {
   assert(Array.isArray(history))
   return (
-    <Box>
+    <Box flexDirection="column">
       {history.map(({ role, content }) => {
         switch (role) {
-          case 'user':
+          case 'assistant':
             return <GPT contents={content} />
           case 'system':
+            return <Text>🤖: {content}</Text>
+          case 'user':
             return <Solver contents={content} />
           default:
             return <Text>🤷‍♂️: {content}</Text>

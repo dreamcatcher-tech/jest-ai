@@ -2,4 +2,12 @@ import React from 'react'
 import { render } from 'ink'
 import App from './app.js'
 
-render(<App priorHistory={[]} />, { exitOnCtrlC: true, patchConsole: true })
+const history = [
+  { role: 'assistant', content: 'moooo' },
+  { role: 'user', content: 'hi' },
+]
+
+render(<App priorHistory={history} />, {
+  exitOnCtrlC: true,
+  patchConsole: true,
+})
