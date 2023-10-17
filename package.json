@@ -19,7 +19,7 @@
     "np": "np patch"
   },
   "bin": {
-    "cli2": "./bin.sh"
+    "cli2": "./cli.js"
   },
   "engines": {
     "node": ">=18"
