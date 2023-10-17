@@ -1,5 +1,4 @@
-#!/bin/sh
-':' //;cd $(dirname $0);exec /usr/bin/env NODE_NO_WARNINGS=1 node --loader=import-jsx "$(basename $0)" "$@"
+#!/usr/bin/env NODE_NO_WARNINGS=1 node --loader=import-jsx
 
 import React from 'react'
 import { render } from 'ink'
