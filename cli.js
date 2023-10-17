@@ -1,25 +1,23 @@
-#!/usr/bin/env NODE_NO_WARNINGS=1 node --loader=import-jsx
-// import React from 'react'
-// import { render } from 'ink'
-// import meow from 'meow'
-// import App from './src/app.js'
+import React from 'react'
+import { render } from 'ink'
+import meow from 'meow'
+import App from './src/app.js'
 
-// const cli = meow(
-//   `
-// 		Usage
-// 		  $ my-ink-cli
+const cli = meow(
+  `
+		Usage
+		  $ my-ink-cli
 
-// 		Options
-// 			--name  Your name
+		Options
+			--name  Your name
 
-// 		Examples
-// 		  $ my-ink-cli --name=Jane
-// 		  Hello, Jane
-// 	`,
-//   {
-//     importMeta: import.meta,
-//   },
-// )
+		Examples
+		  $ my-ink-cli --name=Jane
+		  Hello, Jane
+	`,
+  {
+    importMeta: import.meta,
+  },
+)
 
-// render(<App />, { exitOnCtrlC: true, patchConsole: true })
-console.log('ok')
+render(<App />, { exitOnCtrlC: true, patchConsole: true })

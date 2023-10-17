@@ -16,9 +16,9 @@
     "test": "ava",
     "watch": "ava --watch",
     "lint": "xo",
-    "np": "np"
+    "np": "np --patch"
   },
-  "bin": "./cli.js",
+  "bin": "./bin.sh",
   "engines": {
     "node": ">=18"
   },
