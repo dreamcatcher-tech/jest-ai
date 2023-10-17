@@ -10,7 +10,6 @@ import {
   useStdout,
   Newline,
 } from 'ink'
-import { TaskList, Task } from 'ink-task-list'
 import cliSpinners from 'cli-spinners'
 import OpenAI from 'openai'
 import dotenv from 'dotenv'
@@ -22,28 +21,9 @@ dotenv.config()
 
 const openai = new OpenAI()
 
-const spinner = cliSpinners.clock
-
-const GPT = ({ contents }) => {
-  return (
-    <Box>
-      <Text color="green">🦾: </Text>
-      <Text>{contents}</Text>
-    </Box>
-  )
-}
-const Solver = ({ contents }) => {
-  return (
-    <Box>
-      <Text color="magenta">💡: </Text>
-      <Text>{contents}</Text>
-    </Box>
-  )
-}
-
-export default function App({ history = [] }) {
+export default function App({ priorHistory = [] }) {
   const [prompt, setPrompt] = useState('')
-  const [history, setHistory] = useState(history)
+  const [history, setHistory] = useState(priorHistory)
   useInput((input, key) => {
     // console.log('input', input, 'key', key)
   })
