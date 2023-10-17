@@ -18,7 +18,9 @@ export default function App({ priorHistory = [] }) {
     // generate an id, then store a text item showing history of chat
     setPrompt('')
     let index = 0
+    let originalHistory = []
     setHistory((history) => {
+      originalHistory = history
       const next = [
         ...history,
         { role: 'user', content: prompt },
@@ -29,7 +31,7 @@ export default function App({ priorHistory = [] }) {
     })
 
     const stream = []
-    for await (const result of ai.stream(prompt)) {
+    for await (const result of ai.stream(prompt, originalHistory)) {
       stream.push(result)
       setHistory((history) => {
         const next = [...history]
@@ -37,6 +39,7 @@ export default function App({ priorHistory = [] }) {
         return next
       })
     }
+    setPrompt('')
   }, [prompt, ai])
   useEffect(() => {
     const ai = AI.create()
