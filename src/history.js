@@ -5,16 +5,20 @@ import assert from 'assert-fast'
 // put in a topic badge so we can show what the AI is goaled to
 const GPT = ({ contents }) => {
   return (
-    <Box>
-      <Text color="green">🦾:&nbsp;</Text>
+    <Box flexDirection="row">
+      <Text minWidth={3} color="green">
+        🦾:&nbsp;
+      </Text>
       <Text>{contents}</Text>
     </Box>
   )
 }
 const Solver = ({ contents }) => {
   return (
-    <Box>
-      <Text color="magenta">💡:&nbsp;</Text>
+    <Box flexDirection="row">
+      <Text minWidth={3} color="magenta">
+        💡:&nbsp;
+      </Text>
       <Text>{contents}</Text>
     </Box>
   )

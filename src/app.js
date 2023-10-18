@@ -9,40 +9,34 @@ export default function App({ priorHistory = [] }) {
   const ai = AI.create()
   const [prompt, setPrompt] = useState()
   const [history, setHistory] = useState(priorHistory)
-
+  const [isThinking, setIsThinking] = useState(false)
   useInput((input, key) => {
     // console.log('input', input, 'key', key)
   })
   const onSubmit = useCallback(async () => {
+    if (isThinking) {
+      return
+    }
+    setIsThinking(true)
     setPrompt('')
-    let index
-    setHistory((history) => {
-      const next = [
-        ...history,
-        { role: 'user', content: prompt },
-        { role: 'assistant', content: 'thinking...', isStreaming: true },
-      ]
-      index = next.length - 1
-      return next
-    })
+    let historyNext = [
+      ...history,
+      { role: 'user', content: prompt },
+      { role: 'assistant', content: 'thinking...', isStreaming: true },
+    ]
+    setHistory(historyNext)
 
     const stream = []
     for await (const result of ai.stream(prompt, history)) {
       stream.push(result)
-      if (index === undefined) {
-        continue
-      }
-      setHistory((history) => {
-        const next = [...history]
-        next[index].content = stream.join('')
-        return next
-      })
+      historyNext = [...historyNext]
+      historyNext[historyNext.length - 1].content = stream.join('')
+      setHistory(historyNext)
     }
-    setHistory((history) => {
-      const next = [...history]
-      delete next[index].isStreaming
-      return next
-    })
+    historyNext = [...historyNext]
+    delete historyNext[historyNext.length - 1].isStreaming
+    setHistory(historyNext)
+    setIsThinking(false)
   }, [prompt, history, ai])
   const placeholder = prompt === undefined ? ' (type, genius...)' : ''
   const [finished, streaming] = streamingFilter(history)
