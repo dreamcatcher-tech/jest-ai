@@ -1,17 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import {
-  render,
-  useInput,
-  useStdin,
-  useApp,
-  Box,
-  Text,
-  Static,
-  useStdout,
-  Newline,
-} from 'ink'
-import { TaskList, Task } from 'ink-task-list'
-import cliSpinners from 'cli-spinners'
+import React from 'react'
+import { Box, Text } from 'ink'
 import assert from 'assert-fast'
 
 // put in a topic badge so we can show what the AI is goaled to
@@ -36,21 +24,22 @@ export default function History({ history = [] }) {
   assert(Array.isArray(history))
   return (
     <Box flexDirection="column">
-      {history.map(({ role, content }, index) => {
-        switch (role) {
-          case 'assistant':
-            return <GPT contents={content} key={index} />
-          case 'system':
-            return <Text key={index}>🤖: {content}</Text>
-          case 'user':
-            return <Solver contents={content} key={index} />
-          default:
-            return <Text key={index}>🤷‍♂️: {content}</Text>
-        }
-      })}
+      {history.map((item, index) => (
+        <Item {...item} key={index} />
+      ))}
     </Box>
   )
-  // check all the formats
-  // return the list of components with contents as provided
-  // switch between different agent boxes and flags
+}
+
+export const Item = ({ role, content }) => {
+  switch (role) {
+    case 'assistant':
+      return <GPT contents={content} />
+    case 'system':
+      return <Text>🤖: {content}</Text>
+    case 'user':
+      return <Solver contents={content} />
+    default:
+      return <Text>🤷‍♂️: {content}</Text>
+  }
 }

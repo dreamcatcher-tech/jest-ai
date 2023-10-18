@@ -43,7 +43,7 @@ GPT: (shows the fine tuning status UI) there's 3 jobs going right now, 2 in the 
 
 ## Task priority
 
-1. history in the prompt
+1. ~~history in the prompt~~
 2. access to system prompts
 3. dump sessions to disk with restore
 4. knowledge base filtered inclusion
@@ -52,3 +52,7 @@ GPT: (shows the fine tuning status UI) there's 3 jobs going right now, 2 in the 
 7. consistent edit
 
 Be able to discuss the current status of combinations of bots.
+
+The appraiser should give some reasoning back, which can serve as feedback to the AI to try again with some modified responses. When a human sees an AI stuck in a loop, it should be able to free it with very little effort.
+
+Bot mode and workbench mode - change the prompt, break out with a hotkey. Lets you change the system message part way thru a chat and have it reload the whole chat agian. This lets sessions be generated and prompts manually altered, or chat focus altered to be different

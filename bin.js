@@ -13,3 +13,7 @@ spawn('node', args, {
   },
   cwd: __dirname,
 })
+
+/**
+ * For some unknown reason, this doesn't work when called under npx
+ */

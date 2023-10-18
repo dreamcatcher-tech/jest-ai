@@ -6,6 +6,8 @@ import test from 'ava'
  * Stores in jsonl files, one per session.
  * Indicates changes it made to systems based on function calls and params
  * Uses an icon with some flags to indicate extra substeps the machine took
+ *
+ * h
  */
 
 test.todo('store a session in a file')
