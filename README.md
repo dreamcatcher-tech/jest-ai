@@ -56,4 +56,4 @@ Be able to discuss the current status of combinations of bots.
 
 The appraiser should give some reasoning back, which can serve as feedback to the AI to try again with some modified responses. When a human sees an AI stuck in a loop, it should be able to free it with very little effort.
 
-Bot mode and workbench mode - change the prompt, break out with a hotkey. Lets you change the system message part way thru a chat and have it reload the whole chat agian. This lets sessions be generated and prompts manually altered, or chat focus altered to be different
+Bot mode and workbench mode - change the prompt, break out with a hotkey. Lets you change the system message part way thru a chat and have it reload the whole chat again. This lets sessions be generated and prompts manually altered, or chat focus altered to be different
