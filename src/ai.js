@@ -1,6 +1,8 @@
 import all from 'it-all'
+import fs from 'fs'
 import OpenAI from 'openai'
 import dotenv from 'dotenv'
+import process from 'process'
 dotenv.config()
 
 if (!process.env.OPENAI_API_KEY) {
@@ -13,28 +15,48 @@ if (!process.env.OPENAI_API_KEY) {
 export default class AI {
   #openAi = new OpenAI()
   #sessionFile
-  #system
-  constructor({ system } = {}) {
-    this.#system = system
-    // load or write to a session file
-    // load a bot based on some params and some models ?
+  #session = []
+  system(system) {
+    this.#session.push({ role: 'system', content: system })
   }
-  static create() {
-    return new AI()
+  static create(filename) {
+    const ai = new AI()
+    ai.#sessionFile = filename
+    if (filename) {
+      try {
+        fs.accessSync(filename)
+        const data = fs.readFileSync(filename)
+        const lines = data.toString().split('\n')
+        for (const line of lines) {
+          if (!line) {
+            continue
+          }
+          try {
+            const session = JSON.parse(line)
+            ai.#session.push(session)
+          } catch (err) {
+            // TODO make the AI parse the error offer corrections
+          }
+        }
+      } catch (err) {
+        // TODO log the error somewhere for the user to receive comment on
+      }
+    }
+    return ai
   }
   async prompt(content) {
     const result = await all(this.stream(content))
     return result.join('')
   }
-  async *stream(content, history = []) {
-    let messages = [...history, { role: 'user', content }]
-    if (this.#system) {
-      messages.unshift({ role: 'system', content: this.#system })
-    }
-    messages = messages.map(({ role, content }) => ({ role, content }))
+  get session() {
+    return [...this.#session]
+  }
+  async *stream(content) {
+    this.#session.push({ role: 'user', content })
+    await this.#flush()
     const stream = await this.#openAi.chat.completions.create({
       model: 'gpt-4',
-      messages,
+      messages: this.#session,
       stream: true,
     })
     const results = []
@@ -43,6 +65,21 @@ export default class AI {
       results.push(result)
       yield result
     }
-    return results.join('')
+    const result = results.join('')
+    this.#session.push({ role: 'assistant', content: result })
+    await this.#flush()
+  }
+  #flushedIndex = 0
+  async #flush() {
+    if (!this.#sessionFile) {
+      return
+    }
+    const lines = []
+    for (let i = this.#flushedIndex; i < this.#session.length; i++) {
+      const item = this.#session[i]
+      lines.push(JSON.stringify(item))
+    }
+    fs.appendFileSync(this.#sessionFile, lines.join('\n') + '\n')
+    this.#flushedIndex = this.#session.length
   }
 }

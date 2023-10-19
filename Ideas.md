@@ -7,3 +7,11 @@ Build up a system prompt based on the user asking for preferences to be changed.
 A history compactor, that gives relevant info as a summary, with some notes the llm took based on the conversations. It can then look up those notes if it detects this is a useful function call.
 
 Varying degrees of assault on a given attribution score - running more loops of arguing strengthens the debate resilience, but also approaches a more thoroughly tested score, at the expense of more GPU cost.
+
+Make a package format for an AI package which has some functionality. Says what data it needs in what format, has some tests in appraiser format, describes what its tools do, says what models it needs, says what models it was tested on and shows its testing output. Must handle packages that do not exist yet, so they can be requested.
+
+Format for a bot, which is a system message and a set of system messages, a set of initial prompts, some embeddings, or some content to be embedded.
+
+Use the multiple choices option to generate multiple results quicker when doing testing using the appraiser.
+
+build in the loop that if the format fails, it sends it back to get corrected - this is the fundamental self checking. We can make some tooling that makes this convenient to do - a check function that keeps returning some results and some error messages until ready, a prompt, and the history

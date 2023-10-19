@@ -8,3 +8,6 @@
  * embeddings are tagged by filename, so human can refer to them in this way.
  *
  */
+
+import test from 'ava'
+test.todo('store an embedding from a file')
