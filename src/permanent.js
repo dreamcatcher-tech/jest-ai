@@ -2,6 +2,7 @@ import Gradient from 'ink-gradient'
 import BigText from 'ink-big-text'
 import { Box, Static } from 'ink'
 import { Item } from './history.js'
+import PropTypes from 'prop-types'
 
 export default function Permanent({ history = [] }) {
   return (
@@ -21,3 +22,4 @@ export default function Permanent({ history = [] }) {
     </Static>
   )
 }
+Permanent.propTypes = { history: PropTypes.arrayOf(PropTypes.object) }

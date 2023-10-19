@@ -1,18 +1,22 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { useInput, Box, Text, Static } from 'ink'
+import { useState, useCallback, useEffect } from 'react'
+import { Box, Text } from 'ink'
 import History from './history.js'
 import TextInput from 'ink-text-input'
 import Permanent from './permanent.js'
 import AI from './ai.js'
+import { generateFileName } from './sessions.js'
 
-export default function App({ priorHistory = [] }) {
-  const ai = AI.create()
+export default function App() {
+  const [ai, setAI] = useState()
   const [prompt, setPrompt] = useState()
-  const [history, setHistory] = useState(priorHistory)
+  const [history, setHistory] = useState([])
   const [isThinking, setIsThinking] = useState(false)
-  useInput((input, key) => {
-    // console.log('input', input, 'key', key)
-  })
+  useEffect(() => {
+    const filename = generateFileName()
+    const ai = AI.create(filename)
+    setAI(ai)
+    setHistory(ai.session)
+  }, [])
   const onSubmit = useCallback(async () => {
     if (isThinking) {
       return

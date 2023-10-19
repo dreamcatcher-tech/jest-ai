@@ -45,11 +45,12 @@ GPT: (shows the fine tuning status UI) there's 3 jobs going right now, 2 in the 
 
 1. ~~history in the prompt~~
 2. access to system prompts
-3. dump sessions to disk with restore
+3. ~~dump sessions to disk with restore~~
 4. knowledge base filtered inclusion
 5. web url parsing into the knowledge base
 6. specify a bot by a combination of system, session, and knowledge base
 7. consistent edit
+8. multibot nested execution
 
 Be able to discuss the current status of combinations of bots.
 

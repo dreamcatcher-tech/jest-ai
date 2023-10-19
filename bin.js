@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+import process from 'process'
 import * as url from 'url'
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 import spawn from 'cross-spawn'

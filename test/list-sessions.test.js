@@ -1,6 +1,7 @@
 import path from 'path'
 import test from 'ava'
 import AI from '../src/ai.js'
+import { generateFileName } from '../src/sessions.js'
 import fs from 'fs/promises'
 
 /**
@@ -9,28 +10,33 @@ import fs from 'fs/promises'
  * Stores in jsonl files, one per session.
  * Indicates changes it made to systems based on function calls and params
  * Uses an icon with some flags to indicate extra substeps the machine took
+ *
+ * Types of sessions:
+ * 1. sessions with the colonel
+ * 2. sessions with the appraiser, used in testing ?
+ * 3. sessions used to program a bot
+ * 4. sessions that were changed to be what we wanted back, used for appraisals
+ * 5.
+ *
+ * base sessions
+ * 1. agents: chats used to program a bot (human modified)
+ * 2. sessions: chats that interact with a bot (unmodifiable)
+ * 3. appraisals: chats used to appraise a bot (human modified)
+ *
+ * the trouble is that if you edit a session, loading makes less sense ?
  */
-import userName from 'git-user-name'
-import process from 'process'
-const generateFileName = () => {
-  const cwd = process.cwd()
-  const now = new Date()
-  const rand = '' + now.getHours() + now.getMinutes() + '_' + now.getSeconds()
-  const filename = `${cwd}/chats/${userName()}_${rand}.jsonl`
-  return filename
-}
 
 test.before(async (t) => {
-  await fs.mkdir('tmp', { recursive: true })
-  const tmp = await fs.mkdtemp('tmp/session-test-')
+  await fs.mkdir('.tmp', { recursive: true })
+  const tmp = await fs.mkdtemp('.tmp/session-test-')
   const baseFilename = generateFileName()
   const name = path.basename(baseFilename)
   t.context = { tmp, filename: path.join(tmp, name) }
 })
 test.after.always(async (t) => {
-  const path = t.context.tmp.substring(4)
-  console.log('removing', path)
-  await fs.rmdir(path, { recursive: true })
+  const { filename } = t.context
+  const dir = path.dirname(filename)
+  await fs.rmdir(dir, { recursive: true })
 })
 
 test.only('store a session in a file', async (t) => {
@@ -47,8 +53,6 @@ test.only('store a session in a file', async (t) => {
   const reload = AI.create(filename)
   t.deepEqual(reload.session, ai.session)
 
-  // read in the file to check its contents
-
   // apply the rename function if the ai has enough confidence
   // build in the loop that if the format fails, it sends it back
   // to get corrected - this is the fundamental self checking
@@ -62,10 +66,10 @@ test.only('store a session in a file', async (t) => {
   // when it loads
 })
 test.todo('load a session from a file')
-test.skip('rerun a session using the appraiser', async (t) => {
+test.skip('rerun a session using the appraiser', async () => {
   // this would be done generating choices, and then appraising them
 })
-test.skip('load up a session in the target window', async (t) => {
+test.skip('load up a session in the target window', async () => {
   // this would load up a bot designed for working with these files
   // it would be able to run the session live in the appraiser.
   // and show the results

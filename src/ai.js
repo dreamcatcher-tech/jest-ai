@@ -1,8 +1,8 @@
 import all from 'it-all'
-import fs from 'fs'
 import OpenAI from 'openai'
 import dotenv from 'dotenv'
 import process from 'process'
+import Sessions from './sessions.js'
 dotenv.config()
 
 if (!process.env.OPENAI_API_KEY) {
@@ -14,34 +14,12 @@ if (!process.env.OPENAI_API_KEY) {
 
 export default class AI {
   #openAi = new OpenAI()
-  #sessionFile
+  #disk
   #session = []
-  system(system) {
-    this.#session.push({ role: 'system', content: system })
-  }
   static create(filename) {
     const ai = new AI()
-    ai.#sessionFile = filename
-    if (filename) {
-      try {
-        fs.accessSync(filename)
-        const data = fs.readFileSync(filename)
-        const lines = data.toString().split('\n')
-        for (const line of lines) {
-          if (!line) {
-            continue
-          }
-          try {
-            const session = JSON.parse(line)
-            ai.#session.push(session)
-          } catch (err) {
-            // TODO make the AI parse the error offer corrections
-          }
-        }
-      } catch (err) {
-        // TODO log the error somewhere for the user to receive comment on
-      }
-    }
+    ai.#disk = Sessions.create(filename)
+    ai.#session = ai.#disk.load()
     return ai
   }
   async prompt(content) {
@@ -53,7 +31,7 @@ export default class AI {
   }
   async *stream(content) {
     this.#session.push({ role: 'user', content })
-    await this.#flush()
+    await this.#disk.flush(this.#session)
     const stream = await this.#openAi.chat.completions.create({
       model: 'gpt-4',
       messages: this.#session,
@@ -67,19 +45,6 @@ export default class AI {
     }
     const result = results.join('')
     this.#session.push({ role: 'assistant', content: result })
-    await this.#flush()
-  }
-  #flushedIndex = 0
-  async #flush() {
-    if (!this.#sessionFile) {
-      return
-    }
-    const lines = []
-    for (let i = this.#flushedIndex; i < this.#session.length; i++) {
-      const item = this.#session[i]
-      lines.push(JSON.stringify(item))
-    }
-    fs.appendFileSync(this.#sessionFile, lines.join('\n') + '\n')
-    this.#flushedIndex = this.#session.length
+    await this.#disk.flush(this.#session)
   }
 }
