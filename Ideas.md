@@ -17,3 +17,5 @@ Use the multiple choices option to generate multiple results quicker when doing 
 build in the loop that if the format fails, it sends it back to get corrected - this is the fundamental self checking. We can make some tooling that makes this convenient to do - a check function that keeps returning some results and some error messages until ready, a prompt, and the history
 
 collapse the function list by grouping what functions they want to do, so for loading sessions, a single call, or specifically an agent that decides if they sound like they want us to do something, and then walks a tree checking for the best match, or uses embeddings to narrow down the search of large functions. This search should be the same as in the app store.
+
+File renamer function, so can be given some types of names to follow, and looks at some of the other names, and then suggests a name for the file.

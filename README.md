@@ -57,3 +57,15 @@ Be able to discuss the current status of combinations of bots.
 The appraiser should give some reasoning back, which can serve as feedback to the AI to try again with some modified responses. When a human sees an AI stuck in a loop, it should be able to free it with very little effort.
 
 Bot mode and workbench mode - change the prompt, break out with a hotkey. Lets you change the system message part way thru a chat and have it reload the whole chat again. This lets sessions be generated and prompts manually altered, or chat focus altered to be different
+
+Bot should be able to switch to another bot, and be preloaded with convo so far
+
+How should we handle peoples data ? Detect successful chains so we can get there quicker next time. In the background we should be processing for success scores.
+
+## Issues
+
+1. if a chat is loaded with an assistant, then the response is not automatically sent to gpt until the next user input
+2. editing the session files is problematic. being able to dump the entire contents of our md files in as part of a bot primer is difficult to do in jsonl.
+3. changing md files should cause the bot to reload
+4. restarting the chat from a point after changing the prompt loading is hard
+5. appraiser should consider the headings of the agents too
