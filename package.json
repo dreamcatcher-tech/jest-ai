@@ -11,7 +11,7 @@
   "license": "AGPL-3.0",
   "scripts": {
     "postinstall": "patch-package --patch-dir .patches",
-    "start": "NODE_NO_WARNINGS=1 node --loader=import-jsx src/cli.js",
+    "start": "yarn && NODE_NO_WARNINGS=1 node --loader=import-jsx src/cli.js",
     "dev": "NODE_NO_WARNINGS=1 nodemon --no-stdin --loader=import-jsx src/cli.js",
     "test": "NODE_NO_WARNINGS=1 node --experimental-vm-modules --loader=import-jsx node_modules/.bin/jest",
     "watch": "DEBUG_COLORS=1 NODE_NO_WARNINGS=1 node --experimental-vm-modules --loader=import-jsx node_modules/.bin/jest --watch",

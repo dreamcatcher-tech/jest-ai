@@ -7,7 +7,7 @@ import KnowledgeMatcher from './tools/knowledge-matcher.js'
 const debug = Debug('disk')
 const SESSIONS_DIR = 'sessions'
 const BOTS_DIR = 'bots'
-const KNOWLEDGE_DIR = 'knowledge'
+const KNOWLEDGE_DIR = 'book'
 
 export default class Disk {
   #session // the filename of the session to write to

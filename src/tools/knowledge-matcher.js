@@ -17,6 +17,7 @@ export default class KnowledgeMatcher {
     assert(content)
     const prompt = `${files.join(',')}\n\n${content}`
     debug('prompt', prompt)
+    return content
     if (!this.#cache.has(prompt)) {
       let parseError
       let loop = 0
@@ -37,7 +38,6 @@ export default class KnowledgeMatcher {
         }
       } while (parseError && loop < 10)
     }
-    return content
     return this.#cache.get(prompt)
   }
   async #ensureAi() {
