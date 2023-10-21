@@ -4,7 +4,7 @@ import History from './history.js'
 import TextInput from 'ink-text-input'
 import Permanent from './permanent.js'
 import AI from './ai.js'
-import { generateFileName } from './sessions.js'
+import { generateFileName } from './disk.js'
 
 export default function App() {
   const [ai, setAI] = useState()
@@ -12,8 +12,8 @@ export default function App() {
   const [history, setHistory] = useState([])
   const [isThinking, setIsThinking] = useState(false)
   useEffect(() => {
-    const filename = generateFileName()
-    const ai = AI.create(filename)
+    const session = generateFileName()
+    const ai = AI.create({ session })
     setAI(ai)
     setHistory(ai.session)
   }, [])

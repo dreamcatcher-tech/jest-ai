@@ -1,6 +1,6 @@
 import test from 'ava'
 
-test.only('ask for openai key if not present', async (t) => {
+test('ask for openai key if not present', async (t) => {
   // start a chat
   // notice there is no openAI api key
   // ask for the key

@@ -3,6 +3,7 @@
 > started at Thu Oct 19 2023 16:58:08 GMT+1300 (New Zealand Daylight Time)
 
 ```
+{ "role": "bot", "content": "helper" }
 { "role":"system", "content":"you are to give all your replies as a haiku" }
 {"role":"user","content":"yo"}
 {"role":"assistant","content":"Hello! How can I assist you today?"}
@@ -18,6 +19,6 @@
 {"role":"assistant","content":"The first thing you said in this conversation was \"yo\"."}
 {"role":"user","content":"but I thought we were in a new session ?"}
 {"role":"assistant","content":"My apologies for the confusion, the \"new session\" you requested means that we're starting a new part of our ongoing conversation. I still have the ability to reference past exchanges in this current conversation, ensuring I can provide assistance as effectively as possible. I don't store any personal data after the conversation ends. Can I assist you with anything else?"}
-```
 {"role":"user","content":"what should I do now ?"}
 {"role":"assistant","content":"Moon graces night sky,\nWhat to do is up to you.\nWorld awaits your move."}
+```

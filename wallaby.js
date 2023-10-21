@@ -11,6 +11,5 @@ export default function (wallaby) {
         runner: `--experimental-vm-modules --loader=${loader}`,
       },
     },
-    workers: { restart: true },
   }
 }

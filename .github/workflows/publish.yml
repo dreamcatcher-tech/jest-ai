@@ -19,11 +19,13 @@ jobs:
           cache: yarn
       - run: yarn install --frozen-lockfile
         
+      - name: Lint
+        run: yarn run lint
+
       - name: Test
         env: 
             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: yarn run test
-
 
       - name: Publish
         run: |

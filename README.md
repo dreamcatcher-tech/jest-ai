@@ -2,6 +2,14 @@
 
 AI Agent testing suites
 
+The goal of this repository is to produce bots that are listed in the `bots/` folder. These bots can call each other, and coordinate together to give the user what we want them to have. Primarily we are making an AI assistant to help advise on matters of the Dreamcatcher, but the general framework is applicable to everything.
+
+These bots should be able to call functions and perform tasks that alter external system state. These bots will be used to write and main this repository, as a ranging shot for the coming age of `anything apps`
+
+The first bot to load is always the `colonel`. This bot controls all the other bots, and is intentionally difficult to modify as doing so would render the application unusable.
+
+We must get to a position where we can deploy the testing framework, and specify jobs in terms of the prompt responses we want, and have humans work towards fixing those to work as we expect.
+
 ## Live update of a test story
 
 Running in some trusted environment.
@@ -51,6 +59,12 @@ GPT: (shows the fine tuning status UI) there's 3 jobs going right now, 2 in the 
 6. specify a bot by a combination of system, session, and knowledge base
 7. consistent edit
 8. multibot nested execution
+9. bot loading
+10. edit the knowledge base using the stateboard window
+11. self improvement of a bot based on some desired prompt outcomes
+12. swap out a bot based on human interaction
+13. storage of preferences and issues
+14. window crunching tactics - embeddings or merkle tree
 
 Be able to discuss the current status of combinations of bots.
 
@@ -62,6 +76,8 @@ Bot should be able to switch to another bot, and be preloaded with convo so far
 
 How should we handle peoples data ? Detect successful chains so we can get there quicker next time. In the background we should be processing for success scores.
 
+Extract a common format from each one, and walk the db
+
 ## Issues
 
 1. if a chat is loaded with an assistant, then the response is not automatically sent to gpt until the next user input
@@ -69,3 +85,4 @@ How should we handle peoples data ? Detect successful chains so we can get there
 3. changing md files should cause the bot to reload
 4. restarting the chat from a point after changing the prompt loading is hard
 5. appraiser should consider the headings of the agents too
+6. be able to expand out the knowledge base prompts

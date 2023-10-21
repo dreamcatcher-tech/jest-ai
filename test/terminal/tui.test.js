@@ -1,6 +1,6 @@
 import test from 'ava'
 import { render } from 'ink-testing-library'
-import App from '../src/app.js'
+import App from '../../src/app.js'
 
 test.todo('initial session layout')
 test('after some interactions', async (t) => {

@@ -1,6 +1,6 @@
 import path from 'path'
-import AI from '../src/ai.js'
-import { generateFileName } from '../src/sessions.js'
+import AI from '../../src/ai.js'
+import { generateFileName } from '../../src/disk.js'
 import fs from 'fs/promises'
 
 /**
@@ -26,42 +26,39 @@ import fs from 'fs/promises'
  */
 
 describe('list-sessions', () => {
-  let filename
+  let session
 
   beforeAll(async () => {
     await fs.mkdir('.tmp', { recursive: true })
     const tmp = await fs.mkdtemp('.tmp/session-test-')
     const baseFilename = generateFileName()
-    filename = tmp + '/' + path.basename(baseFilename)
+    session = tmp + '/' + path.basename(baseFilename)
   })
   afterAll(async () => {
-    const dir = path.dirname(filename)
+    const dir = path.dirname(session)
     await fs.rmdir(dir, { recursive: true })
   })
 
-  test.only('store a session in a file', async () => {
-    const ai = AI.create(filename)
-    await ai.prompt('call me bob')
+  it('store a session in a file', async () => {
+    const ai = AI.create({ session })
+    const reply = 'hey, bob'
+    ai['@inject'](reply)
+    const actual = await ai.prompt('call me bob')
+    expect(actual).toEqual(reply)
 
-    expect(await fs.stat(filename)).toBeTruthy()
+    expect(await fs.stat(session)).toBeTruthy()
     expect(ai.session.length).toEqual(2)
 
-    const reload = AI.create(filename)
+    const reload = AI.create({ session })
     expect(reload.session).toEqual(ai.session)
-
-    // open the session as a file in some location
-    // interact with the prompt
-    // observe it writing to file each time
-    // close the file when the session ended - how ?
-    // when it loads
   })
-  // test.todo('load a session from a file')
-  // test.skip('rerun a session using the appraiser', async () => {
-  //   // this would be done generating choices, and then appraising them
-  // })
-  // test.skip('load up a session in the target window', async () => {
-  //   // this would load up a bot designed for working with these files
-  //   // it would be able to run the session live in the appraiser.
-  //   // and show the results
-  // })
+  it.todo('load a session from a file')
+  test.skip('rerun a session using the appraiser', async () => {
+    // this would be done generating choices, and then appraising them
+  })
+  test.skip('load up a session in the target window', async () => {
+    // this would load up a bot designed for working with these files
+    // it would be able to run the session live in the appraiser.
+    // and show the results
+  })
 })
