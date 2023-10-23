@@ -3,7 +3,7 @@ import process from 'process'
 import fs from 'fs'
 import { expect } from 'chai'
 import Debug from 'debug'
-import KnowledgeMatcher from './tools/knowledge-matcher.js'
+import BookLoader from './tools/book-loader.js'
 const debug = Debug('disk')
 const SESSIONS_DIR = 'sessions'
 const BOTS_DIR = 'bots'
@@ -13,7 +13,7 @@ export default class Disk {
   #bots = new Map()
   #filename // the filename of the session to write to
   #flushedIndex = 0
-  #knowledge = KnowledgeMatcher.create()
+  #book = BookLoader.create()
   static create(session) {
     session && expect(session).to.be.a('string')
     const sessions = new Disk(session)
@@ -112,7 +112,7 @@ export default class Disk {
       }
       expect(botPrompts).length.to.be.above(0)
       debug('loaded bot', bot, botPrompts.length)
-      if (bot === 'knowledge-matcher') {
+      if (bot === 'book-loader') {
         debug('knowledge matcher loaded without using knowledge matcher')
         this.#bots.set(bot, botPrompts)
       } else {
@@ -130,7 +130,7 @@ export default class Disk {
     const withKnowledge = []
     for (const item of botPrompts) {
       debug('expanding knowledge', item)
-      const content = await this.#knowledge.expand(files, item.content)
+      const content = await this.#book.expand(files, item.content)
       debug('content', content)
       withKnowledge.push({ ...item, content })
     }

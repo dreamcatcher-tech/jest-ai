@@ -52,14 +52,14 @@ GPT: (shows the fine tuning status UI) there's 3 jobs going right now, 2 in the 
 ## Task priority
 
 1. ~~history in the prompt~~
-2. access to system prompts
+2. ~~access to system prompts~~
 3. ~~dump sessions to disk with restore~~
-4. knowledge base filtered inclusion
+4. ~~knowledge base filtered inclusion~~
 5. web url parsing into the knowledge base
-6. specify a bot by a combination of system, session, and knowledge base
+6. ~~specify a bot by a combination of system, session, and knowledge base~~
 7. consistent edit
 8. multibot nested execution
-9. bot loading
+9. ~~bot loading~~
 10. edit the knowledge base using the stateboard window
 11. self improvement of a bot based on some desired prompt outcomes
 12. swap out a bot based on human interaction

@@ -3,7 +3,6 @@ import assert from 'assert-fast'
 import AI from '../ai.js'
 import Debug from 'debug'
 const debug = Debug('knowledge')
-// load up the bot instructions which are tested separately
 
 export default class KnowledgeMatcher {
   #ai
@@ -50,7 +49,7 @@ export default class KnowledgeMatcher {
       return
     }
     this.#ai = AI.create()
-    await this.#ai.setBot('knowledge-matcher')
+    await this.#ai.setBot('book-loader')
   }
 }
 

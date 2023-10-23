@@ -28,9 +28,10 @@ import AI from '../../src/ai.js'
 
 describe('appraiser', () => {
   it('knowledge-base', async () => {
-    // load up the test prompt pairs
-    const ai = AI.create({ bot: 'knowledge-matcher' })
+    const ai = AI.create()
+    await ai.setBot('book-loader')
 
+    // load up the test prompt pairs
     // test the human ones
     // generate some extra exercising pairs
     // test those too
