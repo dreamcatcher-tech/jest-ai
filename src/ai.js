@@ -2,8 +2,8 @@ import all from 'it-all'
 import OpenAI from 'openai'
 import dotenv from 'dotenv'
 import process from 'process'
-import Sessions from './disk.js'
-import assert from 'assert-fast'
+import Disk from './disk.js'
+import { expect } from 'chai'
 import Debug from 'debug'
 dotenv.config()
 const debug = Debug('ai')
@@ -21,8 +21,9 @@ export default class AI {
   #session = []
   static create({ session } = {}) {
     const ai = new AI()
-    ai.#disk = Sessions.create(session)
-    ai.#session = ai.#disk.load()
+    ai.#disk = Disk.create(session)
+    ai.#push(...ai.#disk.load())
+    debug('loaded session', ai.session)
     return ai
   }
   async prompt(content) {
@@ -33,10 +34,11 @@ export default class AI {
     return [...this.#session]
   }
   async *stream(content) {
-    this.#session.push({ role: 'user', content })
-    await this.#disk.flush(this.#session)
+    this.#push({ role: 'user', content })
+    await this.#disk.flush(this.session)
     const results = []
-    const messages = await this.#disk.expand(this.#session)
+    debug('session', this.session)
+    const messages = await this.#disk.expand(this.session)
     debug('messages', messages)
     if (this.#injectedNextResponse) {
       yield* this.#injectedNextResponse
@@ -55,19 +57,32 @@ export default class AI {
       }
     }
     const result = results.join('')
-    this.#session.push({ role: 'assistant', content: result })
-    await this.#disk.flush(this.#session)
+    this.#push({ role: 'assistant', content: result })
+    await this.#disk.flush(this.session)
   }
   #injectedNextResponse
   '@inject'(...content) {
     this.#injectedNextResponse = content
   }
   async setBot(bot) {
-    assert(typeof bot === 'string')
-    assert(!bot.startsWith('.'), 'bot should not start with .')
-    assert(!bot.startsWith('/'), 'bot should not start with /')
-    assert(!bot.endsWith('.md'), 'bot should not end with .md')
+    expect(bot).to.be.a('string')
+    expect(bot).to.be.ok
+    expect(bot.startsWith('.')).to.be.false
+    expect(bot.startsWith('/')).to.be.false
+    expect(bot.endsWith('.md')).to.be.false
+
     await this.#disk.loadBot(bot) // does the check of the bot
-    this.#session.push({ role: 'bot', content: bot })
+    this.#push({ role: 'bot', content: bot })
+  }
+  #push(...items) {
+    for (const item of items) {
+      expect(item).to.be.an('object')
+      expect(item).to.have.property('role')
+      expect(item).to.have.property('content')
+      expect(item.role).to.be.a('string')
+      expect(item.content).to.be.a('string')
+      expect(item.role).to.be.oneOf(['user', 'assistant', 'system', 'bot'])
+      this.#session.push(item)
+    }
   }
 }

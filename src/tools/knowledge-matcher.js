@@ -1,3 +1,4 @@
+import { expect } from 'chai'
 import assert from 'assert-fast'
 import AI from '../ai.js'
 import Debug from 'debug'
@@ -11,22 +12,26 @@ export default class KnowledgeMatcher {
     return new KnowledgeMatcher()
   }
   async expand(files, content) {
-    await this.#ensureAi()
-    assert(Array.isArray(files))
-    assert(typeof content === 'string')
-    assert(content)
-    const prompt = `${files.join(',')}\n\n${content}`
+    await this.#ensureAi() // avoid infinite loop
+    expect(files).to.be.an('array')
+    expect(files).to.have.length.above(0)
+    expect(content).to.be.a('string')
+    expect(content).to.be.ok
+
+    const filenames = files.map(({ name }) => name)
+    const prompt = `[${filenames.join(',')}]\n\n${content}`
     debug('prompt', prompt)
-    return content
     if (!this.#cache.has(prompt)) {
       let parseError
       let loop = 0
       do {
         let response = await this.#ai.prompt(prompt)
+        debug('response', response)
         try {
           loop++
-          const parsed = JSON.parse(response)
-          const nextContent = replace(parsed, content)
+          const replacements = JSON.parse(response)
+          assert(Array.isArray(replacements), 'item must be an array')
+          const nextContent = replace(replacements, content, files)
           this.#cache.set(prompt, nextContent)
           return nextContent
         } catch (err) {
@@ -47,4 +52,34 @@ export default class KnowledgeMatcher {
     this.#ai = AI.create()
     await this.#ai.setBot('knowledge-matcher')
   }
+}
+
+const replace = (replacements, content, files) => {
+  expect(replacements).to.be.an('array')
+  expect(content).to.be.a('string')
+  expect(content).to.be.ok
+  expect(files).to.be.an('array')
+  expect(files).to.have.length.above(0)
+
+  for (const replacement of replacements) {
+    const { pattern, filenames } = replacement
+    expect(pattern).to.be.a('string')
+    expect(filenames).to.be.an('array')
+    expect(filenames).to.have.length.above(0)
+
+    let replacementContent = ''
+    for (const filename of filenames) {
+      const file = files.find((file) => file.name === filename)
+      expect(file).to.be.ok
+      replacementContent += file.content + '\n\n'
+    }
+    const start = content.indexOf(pattern)
+    expect(start).to.be.above(-1)
+    const end = start + pattern.length
+
+    const before = content.slice(0, start)
+    const after = content.slice(end)
+    content = before + replacementContent + after
+  }
+  return content
 }

@@ -4,21 +4,8 @@
 
 ```
 { "role": "bot", "content": "helper" }
-{ "role":"system", "content":"you are to give all your replies as a haiku" }
-{"role":"user","content":"yo"}
-{"role":"assistant","content":"Hello! How can I assist you today?"}
-{"role":"user","content":"what about a meow ?"}
-{"role":"assistant","content":"Meow! 🐱"}
-{"role":"user","content":"well, that was fun"}
-{"role":"assistant","content":"I'm glad you found it entertaining! If you have any other requests or need assistance with something, feel free to ask."}
-{"role":"user","content":"start a new session"}
-{"role":"assistant","content":"Okay, we are starting a new session now. How can I help you today?"}
-{"role":"user","content":"what was the first thing I said to you ?"}
-{"role":"assistant","content":"As an AI, I don't store personal data unless specifically provided by the user for the purpose of the conversation. I am designed to respect user privacy and confidentiality. Therefore, I'm unable to retrieve the first thing you said to me."}
-{"role":"user","content":"what was the first thing I said to you ?"}
-{"role":"assistant","content":"The first thing you said in this conversation was \"yo\"."}
-{"role":"user","content":"but I thought we were in a new session ?"}
-{"role":"assistant","content":"My apologies for the confusion, the \"new session\" you requested means that we're starting a new part of our ongoing conversation. I still have the ability to reference past exchanges in this current conversation, ensuring I can provide assistance as effectively as possible. I don't store any personal data after the conversation ends. Can I assist you with anything else?"}
-{"role":"user","content":"what should I do now ?"}
-{"role":"assistant","content":"Moon graces night sky,\nWhat to do is up to you.\nWorld awaits your move."}
 ```
+{"role":"user","content":"what is the dreamcatcher ?"}
+{"role":"assistant","content":"The Dreamcatcher is a platform designed to tackle several inefficiencies in the software labor market. It aims to create a more efficient, open, and incentivized market for software development and innovation. It does this by aligning economic rewards with value contributions, broadening access to global talent, implementing a transparent Quality Assurance process, allowing for granular contributions at a 'packetised' level, and facilitating better market discovery of needs and solutions. It's designed to ensure everyone involved in the software development process works towards a common goal.\n"}
+{"role":"user","content":"what is a packet ?"}
+{"role":"assistant","content":"In the context of Dreamcatcher, a 'packet' seems to refer to a discrete unit of work or contribution in the software development process. The platform allows for these 'packetised' contributions, which tackle the inefficiency of over-commitment or under-utilization of skills. It implies that individual tasks are broken down into smaller, manageable 'packets' which can be undertaken by different developers, allowing for more flexibility and efficient use of talent.\n"}

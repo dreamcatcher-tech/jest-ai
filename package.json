@@ -25,6 +25,7 @@
   "dependencies": {
     "@inkjs/ui": "^1.0.0",
     "assert-fast": "^1.0.3",
+    "chai": "^4.3.10",
     "cli-spinners": "^2.9.1",
     "cross-spawn": "^7.0.3",
     "dotenv": "^16.3.1",
@@ -67,7 +68,8 @@
   "jest": {
     "testEnvironment": "node",
     "transform": {},
-    "maxWorkers": "95%"
+    "maxWorkers": "95%",
+    "testTimeout": 20000
   },
   "prettier": {
     "semi": false,

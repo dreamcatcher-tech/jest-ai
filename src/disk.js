@@ -1,7 +1,7 @@
 import userName from 'git-user-name'
 import process from 'process'
 import fs from 'fs'
-import assert from 'assert-fast'
+import { expect } from 'chai'
 import Debug from 'debug'
 import KnowledgeMatcher from './tools/knowledge-matcher.js'
 const debug = Debug('disk')
@@ -10,17 +10,18 @@ const BOTS_DIR = 'bots'
 const KNOWLEDGE_DIR = 'book'
 
 export default class Disk {
-  #session // the filename of the session to write to
+  #bots = new Map()
+  #filename // the filename of the session to write to
   #flushedIndex = 0
   #knowledge = KnowledgeMatcher.create()
   static create(session) {
-    assert(!session || typeof session === 'string')
+    session && expect(session).to.be.a('string')
     const sessions = new Disk(session)
-    sessions.#session = session
+    sessions.#filename = session
     return sessions
   }
   async expand(session) {
-    assert(Array.isArray(session))
+    expect(session).to.be.an('array')
     const withBots = []
     for (const item of session) {
       if (item.role === 'bot') {
@@ -36,17 +37,17 @@ export default class Disk {
     return withBots
   }
   load() {
-    if (!this.#session) {
+    if (!this.#filename) {
       return []
     }
     try {
-      fs.accessSync(this.#session)
+      fs.accessSync(this.#filename)
     } catch (err) {
       return []
     }
     try {
       const session = []
-      const data = fs.readFileSync(this.#session)
+      const data = fs.readFileSync(this.#filename)
       const lines = data.toString().split('\n')
       for (const line of lines) {
         if (!line) {
@@ -68,9 +69,8 @@ export default class Disk {
     }
   }
   async flush(session) {
-    assert(Array.isArray(session))
-    assert(session.length)
-    if (!this.#session) {
+    expect(session).is.an('array')
+    if (!this.#filename) {
       return
     }
     const lines = []
@@ -86,16 +86,16 @@ export default class Disk {
       const item = session[i]
       lines.push(JSON.stringify(item))
     }
-    await fs.promises.appendFile(this.#session, lines.join('\n') + '\n')
+    await fs.promises.appendFile(this.#filename, lines.join('\n') + '\n')
     this.#flushedIndex = session.length
   }
-  #bots = new Map()
   async loadBot(bot) {
     if (!this.#bots.has(bot)) {
-      assert(typeof bot === 'string')
-      assert(!bot.startsWith('.'))
-      assert(!bot.startsWith('/'))
-      assert(!bot.endsWith('.md'))
+      expect(bot).to.be.a('string')
+      expect(bot.startsWith('.')).to.be.false
+      expect(bot.startsWith('/')).to.be.false
+      expect(bot.endsWith('.md')).to.be.false
+
       const filename = `${BOTS_DIR}/${bot}.md`
       const data = fs.readFileSync(filename)
       const lines = data.toString().split('\n')
@@ -110,21 +110,26 @@ export default class Disk {
           // TODO make the AI parse the error offer corrections
         }
       }
-      assert(botPrompts.length)
+      expect(botPrompts).length.to.be.above(0)
       debug('loaded bot', bot, botPrompts.length)
-      if (bot !== 'knowledge-matcher') {
-        this.#bots.set(bot, await this.expandKnowledge(botPrompts))
-      } else {
+      if (bot === 'knowledge-matcher') {
+        debug('knowledge matcher loaded without using knowledge matcher')
         this.#bots.set(bot, botPrompts)
+      } else {
+        const withKnowledge = await this.expandKnowledge(botPrompts)
+        this.#bots.set(bot, withKnowledge)
       }
     }
     return this.#bots.get(bot)
   }
   async expandKnowledge(botPrompts) {
-    const files = fs.readdirSync(KNOWLEDGE_DIR)
+    const files = fs.readdirSync(KNOWLEDGE_DIR).map((name) => {
+      const content = fs.readFileSync(`${KNOWLEDGE_DIR}/${name}`).toString()
+      return { name, content }
+    })
     const withKnowledge = []
     for (const item of botPrompts) {
-      debug('expanding', item)
+      debug('expanding knowledge', item)
       const content = await this.#knowledge.expand(files, item.content)
       debug('content', content)
       withKnowledge.push({ ...item, content })

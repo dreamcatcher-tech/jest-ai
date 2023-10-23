@@ -4,25 +4,9 @@ import { generateFileName } from '../../src/disk.js'
 import fs from 'fs/promises'
 
 /**
- * Describes how to store the user sessions in a text file.
- * Pulls the name from the git repo.
- * Stores in jsonl files, one per session.
- * Indicates changes it made to systems based on function calls and params
- * Uses an icon with some flags to indicate extra substeps the machine took
- *
- * Types of sessions:
- * 1. sessions with the colonel
- * 2. sessions with the appraiser, used in testing ?
- * 3. sessions used to program a bot
- * 4. sessions that were changed to be what we wanted back, used for appraisals
- * 5.
- *
- * base sessions
- * 1. agents: chats used to program a bot (human modified)
- * 2. sessions: chats that interact with a bot (unmodifiable)
- * 3. appraisals: chats used to appraise a bot (human modified)
- *
- * the trouble is that if you edit a session, loading makes less sense ?
+ * Tool to inflate bot definitions with knowledge base articles.
+ * The key feature is that it uses gpt4 to determine what the
+ * format that the user used is.
  */
 
 describe('knowledge-base', () => {
@@ -44,7 +28,7 @@ describe('knowledge-base', () => {
     // @knowledge:filenameInKnowledgeBase
     // but only in ram, so the sessions stay unchanged
     // they would show as a link in the UI
-    // how would the user know it had been expanded ?
+    // ? how would the user know it had been expanded ?
     const ai = AI.create(filename)
     const reply = 'hey, bob'
     ai['@inject'](reply)
