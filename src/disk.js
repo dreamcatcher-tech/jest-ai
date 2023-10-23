@@ -59,7 +59,8 @@ export default class Disk {
           // TODO make the AI parse the error offer corrections
         }
       }
-      this.#flushedIndex = session.length
+      // this.#flushedIndex = session.length
+      this.#filename = undefined
       // TODO check that expanding the session works correctly
       return session
     } catch (err) {

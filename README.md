@@ -65,6 +65,9 @@ GPT: (shows the fine tuning status UI) there's 3 jobs going right now, 2 in the 
 12. swap out a bot based on human interaction
 13. storage of preferences and issues
 14. window crunching tactics - embeddings or merkle tree
+15. load the whole book and only use relevant parts so no rate limits are hit
+16. show what book parts got loaded with each symbol detection
+17. router to pick the bot to load
 
 Be able to discuss the current status of combinations of bots.
 
@@ -86,3 +89,5 @@ Extract a common format from each one, and walk the db
 4. restarting the chat from a point after changing the prompt loading is hard
 5. appraiser should consider the headings of the agents too
 6. be able to expand out the knowledge base prompts
+7. nesting bots should work, where a bot can be composed of other bots, and shown in the gui
+8. if loading a session, do not overwrite it, become ephemeral
