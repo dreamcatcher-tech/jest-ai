@@ -2,9 +2,9 @@
 
 AI Agent testing suites
 
-The goal of this repository is to produce bots that are listed in the `bots/` folder. These bots can call each other, and coordinate together to give the user what we want them to have. Primarily we are making an AI assistant to help advise on matters of the Dreamcatcher, but the general framework is applicable to everything.
+The goal of this repository is to produce bots that are listed in the `bots/` folder. These bots form a botnet where they can call each other, and coordinate together to give the user the best possible answer. Primarily we are making an AI assistant to help advise on matters of the Dreamcatcher, but the general framework is applicable to everything.
 
-These bots should be able to call functions and perform tasks that alter external system state. These bots will be used to write and main this repository, as a ranging shot for the coming age of `anything apps`
+These bots should be able to call functions and perform tasks that alter external system state. These bots will be used to write and maintain this repository, as a ranging shot for the coming age of `anything apps`
 
 The first bot to load is always the `colonel`. This bot controls all the other bots, and is intentionally difficult to modify as doing so would render the application unusable.
 
@@ -23,7 +23,7 @@ The guardian should be able to run tests on its core and update them.
 ## Tasks
 
 1. Make a mock gui of what you want to see - this would be just a jest looking
-   feedback screen of the tests runing
+   feedback screen of the tests running
 2. See how to use the test to allow some changes to be made to some filesystem
 
 ## Interface
@@ -62,12 +62,19 @@ GPT: (shows the fine tuning status UI) there's 3 jobs going right now, 2 in the 
 9. ~~bot loading~~
 10. edit the knowledge base using the stateboard window
 11. self improvement of a bot based on some desired prompt outcomes
-12. swap out a bot based on human interaction
+12. swap out a bot based on human interaction using the colonel
 13. storage of preferences and issues
 14. window crunching tactics - embeddings or merkle tree
 15. load the whole book and only use relevant parts so no rate limits are hit
 16. show what book parts got loaded with each symbol detection
 17. router to pick the bot to load
+18. make a log file that shows what messages are being sent to openai
+
+Should be able to set up test scrips and load them with good prompts.
+
+Colonel needs to handle multiple bot jobs per prompt
+
+colonel could just use another bot, a system bot, to answer system commands.
 
 Be able to discuss the current status of combinations of bots.
 
@@ -91,3 +98,13 @@ Extract a common format from each one, and walk the db
 6. be able to expand out the knowledge base prompts
 7. nesting bots should work, where a bot can be composed of other bots, and shown in the gui
 8. if loading a session, do not overwrite it, become ephemeral
+9. preference bot should know when a rule is short or forever, and should be overridable
+10. debug view of how the bots decided on the routing
+
+Start making a blockchain app that uses the colonel app to generate a hard coded application that represents everything the colonel has been asked to do, like macros, to date
+
+## Milestones
+
+1. app on constantly without restarts - no need to ever leave it
+2. put up in a web version with added edit and button abilities
+3. connect to solidity contract so can take in money for packets

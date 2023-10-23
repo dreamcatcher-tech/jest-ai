@@ -24,11 +24,6 @@ describe('knowledge-base', () => {
   })
 
   it('load up from a knowledge base', async () => {
-    // figure out a links mechanism to
-    // @knowledge:filenameInKnowledgeBase
-    // but only in ram, so the sessions stay unchanged
-    // they would show as a link in the UI
-    // ? how would the user know it had been expanded ?
     const ai = AI.create(filename)
     const reply = 'hey, bob'
     ai['@inject'](reply)
