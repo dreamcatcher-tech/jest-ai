@@ -24,6 +24,9 @@ export default class AI {
     ai.#disk = Disk.create(session)
     ai.#push(...ai.#disk.load())
     debug('loaded session', ai.session)
+    if (ai.session.length && ai.session[0].role === 'user') {
+      // TODO make it stream back responses
+    }
     return ai
   }
   async prompt(content) {
@@ -35,6 +38,9 @@ export default class AI {
   }
   async *stream(content) {
     this.#push({ role: 'user', content })
+    yield* this.#stream()
+  }
+  async *#stream() {
     await this.#disk.flush(this.session)
     const results = []
     debug('session', this.session)

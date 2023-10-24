@@ -9,12 +9,6 @@ const debug = Debug('test')
 
 describe('bots', () => {
   it.only('loads up a bot', async () => {
-    // how to collapse the bot history ?
-    // @bot(bot name) possibly with the git commit permalink
-
-    // session loaded badge at the top of the history
-    // let you rename the current session ?
-
     const bot = 'helper'
     const ai = AI.create()
     await ai.setBot(bot)

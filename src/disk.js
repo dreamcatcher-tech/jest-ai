@@ -120,6 +120,7 @@ export default class Disk {
         const withKnowledge = await this.expandKnowledge(botPrompts)
         this.#bots.set(bot, withKnowledge)
       }
+      // need to reloop and insert all the other bots it loads
     }
     return this.#bots.get(bot)
   }
