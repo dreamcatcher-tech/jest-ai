@@ -10,30 +10,30 @@ import fs from 'fs/promises'
  */
 
 describe('knowledge-base', () => {
-  let filename
+  let session
 
   beforeAll(async () => {
     await fs.mkdir('.tmp', { recursive: true })
     const tmp = await fs.mkdtemp('.tmp/session-test-')
     const baseFilename = generateFileName()
-    filename = tmp + '/' + path.basename(baseFilename)
+    session = tmp + '/' + path.basename(baseFilename)
   })
   afterAll(async () => {
-    const dir = path.dirname(filename)
+    const dir = path.dirname(session)
     await fs.rmdir(dir, { recursive: true })
   })
 
   it('load up from a knowledge base', async () => {
-    const ai = AI.create(filename)
+    const ai = AI.create({ session })
     const reply = 'hey, bob'
     ai['@inject'](reply)
     const actual = await ai.prompt('call me bob')
     expect(actual).toEqual(reply)
 
-    expect(await fs.stat(filename)).toBeTruthy()
+    expect(await fs.stat(session)).toBeTruthy()
     expect(ai.session.length).toEqual(2)
 
-    const reload = AI.create(filename)
+    const reload = AI.create({ session })
     expect(reload.session).toEqual(ai.session)
   })
   it.todo('loads from a glob pattern')
