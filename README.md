@@ -109,3 +109,8 @@ Start making a blockchain app that uses the colonel app to generate a hard coded
 1. app on constantly without restarts - no need to ever leave it
 2. put up in a web version with added edit and button abilities
 3. connect to solidity contract so can take in money for packets
+
+log dumping to disk
+say what files got loaded in book, one per match
+make a chat load up that is preloaded and run using the appraiser
+If add a user prompt at the end of boot, api will be called
