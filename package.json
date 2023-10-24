@@ -16,7 +16,8 @@
     "test": "NODE_NO_WARNINGS=1 node --experimental-vm-modules --loader=import-jsx node_modules/.bin/jest",
     "watch": "DEBUG_COLORS=1 NODE_NO_WARNINGS=1 node --experimental-vm-modules --loader=import-jsx node_modules/.bin/jest --watch",
     "lint": "eslint .",
-    "np": "np patch"
+    "np": "np patch",
+    "semantic-release": "semantic-release"
   },
   "bin": "bin.js",
   "engines": {
@@ -44,7 +45,7 @@
     "ink-text-input": "^5.0.1",
     "it-all": "^3.0.3",
     "meow": "^12.1.1",
-    "openai": "^4.12.4",
+    "openai": "^4.13.0",
     "patch-package": "^8.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -63,7 +64,8 @@
     "jest": "^29.7.0",
     "nodemon": "^3.0.1",
     "np": "^8.0.4",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "semantic-release": "^22.0.5"
   },
   "jest": {
     "testEnvironment": "node",
@@ -74,5 +76,14 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dreamcatcher-tech/jest-ai.git"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }
