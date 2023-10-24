@@ -9,6 +9,6 @@
  * The generated texts form the axioms of the dreamcatcher, with the
  * goal of maximal innovation.
  */
-import test from 'ava'
-
-test.todo('add an agent to the pantheon')
+describe('pantheon', () => {
+  it.todo('add an agent to the pantheon')
+})

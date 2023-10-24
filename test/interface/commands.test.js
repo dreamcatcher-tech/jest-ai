@@ -10,6 +10,6 @@
  * AI adds some comment on it, or decides what to do next.
  */
 
-import test from 'ava'
-
-test.todo('exit')
+describe('commands', () => {
+  it.todo('exit')
+})

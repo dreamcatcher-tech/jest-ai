@@ -9,7 +9,6 @@ const debug = Debug('test')
 
 describe('bots', () => {
   it.only('loads up a bot', async () => {
-    Debug.enable('ai disk knowledge test')
     // how to collapse the bot history ?
     // @bot(bot name) possibly with the git commit permalink
 

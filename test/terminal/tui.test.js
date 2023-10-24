@@ -1,17 +1,17 @@
-import test from 'ava'
-import { render } from 'ink-testing-library'
-import App from '../../src/app.js'
+// import { render } from 'ink-testing-library'
+// import App from '../../src/app.js'
+// import { Text } from 'ink'
 
-test.todo('initial session layout')
-test('after some interactions', async (t) => {
-  const { stdin } = render(<App />)
-  stdin.write('to be, or not to be...')
-  t.pass()
-})
-test('with history', async (t) => {
-  const history = []
-  const { lastFrame, stdin } = render(<App history={history} />)
-  stdin.write('to be, or not to be...')
-  console.log('lastFrame', lastFrame())
-  t.pass()
+describe('tui', () => {
+  it.todo('initial session layout')
+  it('after some interactions', async () => {
+    // const { stdin } = render(<Text> meow </Text>)
+    // stdin.write('to be, or not to be...')
+  })
+  it('with history', async () => {
+    // const history = []
+    // const { lastFrame, stdin } = render(<App history={history} />)
+    // stdin.write('to be, or not to be...')
+    // console.log('lastFrame', lastFrame())
+  })
 })

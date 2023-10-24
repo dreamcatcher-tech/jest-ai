@@ -6,10 +6,10 @@
  * Notifies other people about what they're interested in if something changes.
  */
 
-import test from 'ava'
-
-test.todo('add a task')
-test.todo('remove a task')
-test.todo('modify a task')
-test.todo('list tasks')
-test.todo('mark a task as done')
+describe('task-list', () => {
+  it.todo('add a task')
+  it.todo('remove a task')
+  it.todo('modify a task')
+  it.todo('list tasks')
+  it.todo('mark a task as done')
+})
