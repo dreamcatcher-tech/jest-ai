@@ -69,6 +69,7 @@ GPT: (shows the fine tuning status UI) there's 3 jobs going right now, 2 in the 
 16. show what book parts got loaded with each symbol detection
 17. router to pick the bot to load
 18. make a log file that shows what messages are being sent to openai
+19. Example attribution bot for contributions to enhancing a bot thru usage
 
 Should be able to set up test scrips and load them with good prompts.
 
