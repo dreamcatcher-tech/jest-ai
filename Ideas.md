@@ -35,3 +35,7 @@ Summarize the assistant reponses to keep their sizes down.
 Use fine tuning to inject the knowledge book into the model, so it is always technically built on these base models. The workbench would need to test fine tuned versions by first preparing the fine tuned model based on differing data sets, and then running those in comparison with other prompt compression strategies. The system should be open to improvement from others.
 
 Dictionary collision checker, to ensure there are no clashes in nomenclature.
+
+Make the book responses include a link to the relevant section in a book that was used, so the user can read the book directly based on what was referenced in the response.
+
+Show the advantages of gpt4 by doing matrix testing where we use gpt3.5 against some of the tests and show the output performance of each.

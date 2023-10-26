@@ -1,5 +1,6 @@
 import userName from 'git-user-name'
 import process from 'process'
+import path from 'path'
 import fs from 'fs'
 import { expect } from 'chai'
 import Debug from 'debug'
@@ -11,13 +12,19 @@ const KNOWLEDGE_DIR = 'book'
 
 export default class Disk {
   #bots = new Map()
-  #filename // the filename of the session to write to
+  #session // the filename of the session to write to
+  #log // filename of the log to keep
   #flushedIndex = 0
   #book = BookLoader.create()
   static create(session) {
     session && expect(session).to.be.a('string')
     const sessions = new Disk(session)
-    sessions.#filename = session
+    if (session) {
+      const dir = path.dirname(session)
+      sessions.#session = session
+      const timestamp = new Date().toLocaleString().replace(/[/:]/g, '-')
+      sessions.#log = `${dir}/log-${timestamp}.md`
+    }
     return sessions
   }
   async expand(session) {
@@ -37,17 +44,17 @@ export default class Disk {
     return withBots
   }
   load() {
-    if (!this.#filename) {
+    if (!this.#session) {
       return []
     }
     try {
-      fs.accessSync(this.#filename)
+      fs.accessSync(this.#session)
     } catch (err) {
       return []
     }
     try {
       const session = []
-      const data = fs.readFileSync(this.#filename)
+      const data = fs.readFileSync(this.#session)
       const lines = data.toString().split('\n')
       for (const line of lines) {
         if (!line) {
@@ -59,8 +66,6 @@ export default class Disk {
           // TODO make the AI parse the error offer corrections
         }
       }
-      // this.#flushedIndex = session.length
-      this.#filename = undefined
       // TODO check that expanding the session works correctly
       return session
     } catch (err) {
@@ -71,7 +76,7 @@ export default class Disk {
   }
   async flush(session) {
     expect(session).is.an('array')
-    if (!this.#filename) {
+    if (!this.#log) {
       return
     }
     const lines = []
@@ -87,7 +92,7 @@ export default class Disk {
       const item = session[i]
       lines.push(JSON.stringify(item))
     }
-    await fs.promises.appendFile(this.#filename, lines.join('\n') + '\n')
+    await fs.promises.appendFile(this.#log, lines.join('\n') + '\n')
     this.#flushedIndex = session.length
   }
   async loadBot(bot) {
