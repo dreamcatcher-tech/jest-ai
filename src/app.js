@@ -11,9 +11,15 @@ export default function App() {
   const [prompt, setPrompt] = useState()
   const [history, setHistory] = useState([])
   const [isThinking, setIsThinking] = useState(false)
+  const [unsubmitted, setUnsubmitted] = useState()
   useEffect(() => {
     const session = generateFileName()
     const ai = AI.create({ session })
+    const unsubmitted = ai.popUnsubmitted()
+    if (unsubmitted) {
+      setPrompt(unsubmitted.content)
+      setUnsubmitted(unsubmitted)
+    }
     setAI(ai)
     setHistory(ai.session)
   }, [])
@@ -44,6 +50,14 @@ export default function App() {
   }, [prompt, history, ai])
   const placeholder = prompt === undefined ? ' (type, genius...)' : ''
   const [finished, streaming] = streamingFilter(history)
+
+  useEffect(() => {
+    if (unsubmitted) {
+      setUnsubmitted()
+      onSubmit()
+    }
+  }, [unsubmitted, onSubmit])
+
   return (
     <>
       <Permanent history={finished} />

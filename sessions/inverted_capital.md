@@ -4,4 +4,5 @@
 
 ```
 { "role": "bot", "content": "helper" }
+{"role": "user", "content" : "meow" }
 ```

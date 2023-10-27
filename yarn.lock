@@ -7694,10 +7694,10 @@ open@^9.1.0:
     is-inside-container "^1.0.0"
     is-wsl "^2.2.0"
 
-openai@^4.13.0:
-  version "4.13.0"
-  resolved "https://registry.yarnpkg.com/openai/-/openai-4.13.0.tgz#9645754564eefcb81b5d731b2b2cb039d5ee55bf"
-  integrity sha512-EPqHcB0got9cXDZmQae1KytgA4YWtTnUc7tV8hlahZtcO70DMa4kiaXoxnutj9lwmeKQO7ntG+6pmXtrCMejuQ==
+openai@^4.14.0:
+  version "4.14.0"
+  resolved "https://registry.yarnpkg.com/openai/-/openai-4.14.0.tgz#5177437683e73bceea1803ea7605905a6e95a0a3"
+  integrity sha512-pWQYkFWdeudR1yLyS/rFfIv/MTXqFEtlN4EKVm0F6KKKGjhuthznPOCC4hxfAFmjlgbpJJXhQQ/oBeB9bxFmUw==
   dependencies:
     "@types/node" "^18.11.18"
     "@types/node-fetch" "^2.6.4"
@@ -8391,24 +8391,24 @@ react-async-hook@^4.0.0:
   resolved "https://registry.npmjs.org/react-async-hook/-/react-async-hook-4.0.0.tgz"
   integrity sha512-97lgjFkOcHCTYSrsKBpsXg3iVWM0LnzedB749iP76sb3/8Ouu4nHIkCLEOrQWHVYqrYxjF05NN6GHoXWFkB3Kw==
 
-react-devtools-core@4.28.4:
-  version "4.28.4"
-  resolved "https://registry.npmjs.org/react-devtools-core/-/react-devtools-core-4.28.4.tgz"
-  integrity sha512-IUZKLv3CimeM07G3vX4H4loxVpByrzq3HvfTX7v9migalwvLs9ZY5D3S3pKR33U+GguYfBBdMMZyToFhsSE/iQ==
+react-devtools-core@4.28.5:
+  version "4.28.5"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.28.5.tgz#c8442b91f068cdf0c899c543907f7f27d79c2508"
+  integrity sha512-cq/o30z9W2Wb4rzBefjv5fBalHU0rJGZCHAkf/RHSBWSSYwh8PlQTqqOJmgIIbBtpj27T6FIPXeomIjZtCNVqA==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
 
-react-devtools@^4.28.4:
-  version "4.28.4"
-  resolved "https://registry.npmjs.org/react-devtools/-/react-devtools-4.28.4.tgz"
-  integrity sha512-V6oLo9xmkMPCcFFpXkObp+P/xUGHl3wLHxZBDy/u1eStpBr5s12Nrl1k9LGhuhe1MRNFLUgDtNDJh9qEjowJuQ==
+react-devtools@^4.28.5:
+  version "4.28.5"
+  resolved "https://registry.yarnpkg.com/react-devtools/-/react-devtools-4.28.5.tgz#4d82b467bb8a031a02b2c9b45ed7a62e386f663b"
+  integrity sha512-iVYraMxjfqpb+e1z3MrYIqdQABDgAZAR5wuSJwGMpxEYLC+XI/YJUbB3NlN1Wlq4s1ZvibfOtSckjnl2b3BL8Q==
   dependencies:
     cross-spawn "^5.0.1"
     electron "^23.1.2"
     ip "^1.1.4"
     minimist "^1.2.3"
-    react-devtools-core "4.28.4"
+    react-devtools-core "4.28.5"
     update-notifier "^2.1.0"
 
 react-is@^16.13.1:
