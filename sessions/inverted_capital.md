@@ -1,8 +1,9 @@
 # chat session
 
-> started at Thu Oct 19 2023 16:58:08 GMT+1300 (New Zealand Daylight Time)
+> started at Mon Oct 23 2023 08:18:37 GMT+0100 (British Summer Time)
 
 ```
-{ "role": "bot", "content": "helper" }
-{"role": "user", "content" : "meow" }
+{"role":"bot","content":"helper"}
+{"role":"user", "content":"demonstration of automatic submission of dangling user prompts in the TartanMalcolm.md session file"}
+
 ```
