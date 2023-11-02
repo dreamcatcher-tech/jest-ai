@@ -5,6 +5,7 @@ import fs from 'fs'
 import { expect } from 'chai'
 import Debug from 'debug'
 import BookLoader from './tools/book-loader.js'
+import assert from 'assert-fast'
 const debug = Debug('disk')
 const SESSIONS_DIR = 'sessions'
 const BOTS_DIR = 'bots'
@@ -29,50 +30,48 @@ export default class Disk {
   }
   async expand(session) {
     expect(session).to.be.an('array')
-    const withBots = []
+    const messages = []
+    const functions = []
     for (const item of session) {
       if (item.role === 'bot') {
-        const bot = item.content
-        await this.loadBot(bot)
-        debug('prompts for', bot, this.#bots.get(bot))
-        withBots.push(...this.#bots.get(bot))
+        const botName = item.content
+        const bot = await this.loadBot(botName)
+        debug('bot for', botName, bot)
+        messages.push(...bot.messages)
+        functions.push(...bot.functions)
       } else {
-        withBots.push(item)
+        messages.push(item)
       }
     }
-
-    return withBots
+    return { messages, functions }
   }
   load() {
-    if (!this.#session) {
-      return []
-    }
-    try {
-      fs.accessSync(this.#session)
-    } catch (err) {
-      return []
-    }
-    try {
-      const session = []
-      const data = fs.readFileSync(this.#session)
-      const lines = data.toString().split('\n')
-      for (const line of lines) {
-        if (!line) {
-          continue
+    if (this.#session) {
+      try {
+        fs.accessSync(this.#session)
+        const session = []
+        const data = fs.readFileSync(this.#session)
+        const lines = data.toString().split('\n')
+        for (const line of lines) {
+          if (!line) {
+            continue
+          }
+          try {
+            session.push(JSON.parse(line))
+          } catch (err) {
+            // TODO make the AI parse the error offer corrections
+          }
         }
-        try {
-          session.push(JSON.parse(line))
-        } catch (err) {
-          // TODO make the AI parse the error offer corrections
+        // TODO check that expanding the session works correctly
+        return { session }
+      } catch (err) {
+        // TODO log the error somewhere for the user to receive comment on
+        if (err.code !== 'ENOENT') {
+          console.error(err)
         }
       }
-      // TODO check that expanding the session works correctly
-      return session
-    } catch (err) {
-      // TODO log the error somewhere for the user to receive comment on
-      console.error(err)
-      return []
     }
+    return { session: [] }
   }
   async flush(session) {
     expect(session).is.an('array')
@@ -105,25 +104,54 @@ export default class Disk {
       const filename = `${BOTS_DIR}/${bot}.md`
       const data = fs.readFileSync(filename)
       const lines = data.toString().split('\n')
-      const botPrompts = []
+      const messages = []
+      let functionsString
       for (const line of lines) {
         if (!line) {
           continue
         }
-        try {
-          botPrompts.push(JSON.parse(line))
-        } catch (err) {
-          // TODO make the AI parse the error offer corrections
+
+        if (line.trim() === '## FUNCTIONS') {
+          expect(functionsString).to.be.undefined
+          functionsString = ' '
+        } else if (functionsString) {
+          if (!line.trim().startsWith('```')) {
+            functionsString += line
+          }
+        } else {
+          try {
+            messages.push(JSON.parse(line))
+          } catch (err) {
+            // TODO make the AI parse the error offer corrections
+          }
         }
       }
-      expect(botPrompts).length.to.be.above(0)
-      debug('loaded bot', bot, botPrompts.length)
+      expect(messages).length.to.be.above(0)
+
+      const functions = []
+      try {
+        if (functionsString) {
+          const functionsArray = JSON.parse(functionsString)
+          for (const fn of functionsArray) {
+            assert(fn.title, `missing title for ${JSON.stringify(fn, null, 2)}`)
+            assert(fn.description, `missing description for ${fn.title}`)
+            const name = fn.title.replace(' ', '_')
+            const { description, ...parameters } = fn
+            debug('adding function', name)
+            functions.push({ name, description, parameters })
+          }
+        }
+      } catch (error) {
+        console.error('failed to parse functions: ' + functionsString)
+      }
+
+      debug('loaded bot', bot, messages.length, functions.length)
       if (bot === 'book-loader') {
         debug('knowledge matcher loaded without using knowledge matcher')
-        this.#bots.set(bot, botPrompts)
+        this.#bots.set(bot, { messages, functions })
       } else {
-        const withKnowledge = await this.expandKnowledge(botPrompts)
-        this.#bots.set(bot, withKnowledge)
+        const withKnowledge = await this.expandKnowledge(messages)
+        this.#bots.set(bot, { messages: withKnowledge, functions })
       }
       // need to reloop and insert all the other bots it loads
     }

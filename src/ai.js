@@ -22,7 +22,9 @@ export default class AI {
   static create({ session } = {}) {
     const ai = new AI()
     ai.#disk = Disk.create(session)
-    ai.#push(...ai.#disk.load())
+    const loaded = ai.#disk.load()
+    expect(loaded).has.property('session')
+    ai.#push(...loaded.session)
     debug('loaded session', ai.session)
     return ai
   }
@@ -46,28 +48,59 @@ export default class AI {
   }
   async *#stream() {
     await this.#disk.flush(this.session)
-    const results = []
+    const contentParts = []
+    const functionParts = []
     debug('session', this.session)
-    const messages = await this.#disk.expand(this.session)
+    const { messages, functions } = await this.#disk.expand(this.session)
     debug('messages', messages)
+    debug('functions', functions)
     if (this.#injectedNextResponse) {
       yield* this.#injectedNextResponse
-      results.push(...this.#injectedNextResponse)
+      contentParts.push(...this.#injectedNextResponse)
       this.#injectedNextResponse = undefined
     } else {
-      const stream = await this.#openAi.chat.completions.create({
+      const params = {
         model: 'gpt-4',
         messages,
         stream: true,
-      })
+      }
+      functions.length && (params.functions = functions)
+      const stream = await this.#openAi.chat.completions.create(params)
       for await (const part of stream) {
-        const result = part.choices[0]?.delta?.content || ''
-        results.push(result)
-        yield result
+        const content = part.choices[0]?.delta?.content || ''
+        content && contentParts.push(content)
+        const fn = part.choices[0]?.delta?.function_call || ''
+        fn && functionParts.push(fn)
+        if (content) {
+          yield content
+        }
+        if (fn && fn.name) {
+          yield 'FUNCTION: ' + fn.name
+        }
       }
     }
-    const result = results.join('')
-    this.#push({ role: 'assistant', content: result })
+    if (functionParts.length) {
+      let name = ''
+      let args = ''
+      functionParts.forEach((part) => {
+        if (part.name) {
+          name += part.name
+        } else if (part.arguments) {
+          args += part.arguments
+        } else {
+          throw Error('unknown function part' + JSON.stringify(part, null, 2))
+        }
+      })
+      const string = '\n' + args
+      yield string
+      this.#push({ role: 'assistant', content: string })
+    }
+    if (contentParts.length) {
+      this.#push({ role: 'assistant', content: contentParts.join('') })
+    }
+    if (functionParts.length && contentParts.length) {
+      throw new Error('both function and content parts received')
+    }
     await this.#disk.flush(this.session)
   }
   #injectedNextResponse
