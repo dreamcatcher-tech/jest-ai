@@ -74,25 +74,29 @@ export default class AI {
         if (content) {
           yield content
         }
-        if (fn && fn.name) {
-          yield 'FUNCTION: ' + fn.name
+        if (fn) {
+          if (fn.name) {
+            yield 'FUNCTION: ' + fn.name + '\n'
+          }
+          if (fn.arguments) {
+            yield fn.arguments
+          }
         }
       }
     }
     if (functionParts.length) {
-      let name = ''
       let args = ''
+      let name = ''
       functionParts.forEach((part) => {
-        if (part.name) {
-          name += part.name
-        } else if (part.arguments) {
+        if (part.arguments) {
           args += part.arguments
+        } else if (part.name) {
+          name = part.name
         } else {
           throw Error('unknown function part' + JSON.stringify(part, null, 2))
         }
       })
-      const string = '\n' + args
-      yield string
+      const string = 'FUNCTION: ' + name + '\n' + args
       this.#push({ role: 'assistant', content: string })
     }
     if (contentParts.length) {
